@@ -1,17 +1,25 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
+
+with open("README.md", "r") as f:
+    long_desc = f.read()
 
 setup(
-    name='pdcloud',
-    version='0.1',
+    name="pdcloud",
+    version="0.2",
     packages=find_packages(),
-    description='A description of your package',
-    long_description=open('README.md').read(),
-    long_description_content_type='text/markdown',
-    author='Your Name',
-    author_email='',
-    url='',
-    license='MIT',
+    description="Python pandas dataframe cloud agnostic storage",
+    long_description=long_desc,
+    long_description_content_type="text/markdown",
+    author="Vitali M.",
+    author_email="pilot@aviatorv.com",
+    url="",
+    license="MIT",
     install_requires=[
-        # List your package dependencies here
+        "azure-storage-blob",
+        "pyarrow",
+        "pandas",
+        "aiohttp",
     ],
+    extras_require={"test": ["pytest", "pytest-asyncio", "twine"]},
+    python_requires=">=3.11",
 )
