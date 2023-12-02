@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="pdcloud",
-    version="0.3",
+    version="0.4",
     packages=find_packages(),
     description="Python pandas dataframe cloud agnostic storage",
     long_description=long_desc,
@@ -21,5 +21,5 @@ setup(
         "aiohttp",
     ],
     extras_require={"test": ["pytest", "pytest-asyncio", "twine"]},
-    python_requires=">=3.10",
+    python_requires=">=3.8",
 )
