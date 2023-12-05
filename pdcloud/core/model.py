@@ -84,11 +84,15 @@ class Lib:
         container = container or self.container
         return asyncio.run(asyncio.ensure_future(self.storage.write_data(container, data_object, data, overwrite)))
 
-    def get_objects(self) -> List[str]:
+    def get_objects(self, container: str = None, regex_pattern: str = None) -> List[str]:
         """
         Retrieves a list of all data object names in the container.
 
         Returns:
             List[str]: A list of data object names.
         """
-        return self.storage.list_objects(self.container)
+        container = container or self.container
+        return self.storage.list_objects(container, regex_pattern)
+
+    def get_containers(self) -> pd.DataFrame:
+        return asyncio.run(self.storage.list_all_containers())

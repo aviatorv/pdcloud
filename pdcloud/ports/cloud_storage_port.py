@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Optional
 
 import pandas as pd
 
@@ -38,14 +38,25 @@ class CloudStoragePort(ABC):
         pass
 
     @abstractmethod
-    def list_objects(self, container: str) -> List[str]:
+    def list_objects(self, container: str, regex_pattern: Optional[str] = None) -> List[str]:
         """
-        Lists all objects (blobs) in a specified container.
+        Lists all objects (blobs) in a specified container, optionally filtered by a regex pattern.
 
         Args:
             container (str): The name of the container from which to list objects.
+            regex_pattern (str, optional): The regex pattern to filter object names. If None, all objects are listed. Defaults to None.
 
         Returns:
-            List[str]: A list of object names in the specified container.
+            List[str]: A list of object names in the specified container that match the regex pattern, if provided; otherwise, all object names.
+        """
+        pass
+
+    @abstractmethod
+    async def list_all_containers(self) -> List[str]:
+        """
+        Asynchronously lists all containers in the cloud storage service.
+
+        Returns:
+            List[str]: A list of all container names in the cloud storage service.
         """
         pass

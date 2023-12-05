@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="pdcloud",
-    version="0.4",
+    version="0.4.1",
     packages=find_packages(),
     description="Python pandas dataframe cloud agnostic storage",
     long_description=long_desc,
