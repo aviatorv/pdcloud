@@ -1,6 +1,5 @@
 import asyncio
 from dataclasses import dataclass
-from io import BytesIO
 from typing import List, Optional
 
 import nest_asyncio
@@ -34,7 +33,11 @@ class Lib:
         tasks = []
         for data_object in self.get_objects():
             try:
-                tasks.append(asyncio.ensure_future(self.storage.read_data(self.container, data_object)))
+                tasks.append(
+                    asyncio.ensure_future(
+                        self.storage.read_data(self.container, data_object)
+                    )
+                )
             except Exception as e:
                 print(f"Error fetching {data_object}: {e}")
         return await asyncio.gather(*tasks)
@@ -51,7 +54,9 @@ class Lib:
             Optional[pd.DataFrame]: The processed data as a Pandas DataFrame, or None if an error occurs.
         """
         try:
-            return await asyncio.ensure_future(self.storage.read_data(self.container, data_object))
+            return await asyncio.ensure_future(
+                self.storage.read_data(self.container, data_object)
+            )
         except Exception as e:
             print(f"Error fetching {data_object}: {e}")
             return None
@@ -80,11 +85,23 @@ class Lib:
         """
         return asyncio.run(self._fetch_data_object(data_object))
 
-    def write(self, data_object: str, data: pd.DataFrame, container: str = None, overwrite: bool = False):
+    def write(
+        self,
+        data_object: str,
+        data: pd.DataFrame,
+        container: str = None,
+        overwrite: bool = False,
+    ):
         container = container or self.container
-        return asyncio.run(asyncio.ensure_future(self.storage.write_data(container, data_object, data, overwrite)))
+        return asyncio.run(
+            asyncio.ensure_future(
+                self.storage.write_data(container, data_object, data, overwrite)
+            )
+        )
 
-    def get_objects(self, container: str = None, regex_pattern: str = None) -> List[str]:
+    def get_objects(
+        self, container: str = None, regex_pattern: str = None
+    ) -> List[str]:
         """
         Retrieves a list of all data object names in the container.
 

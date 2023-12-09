@@ -25,7 +25,9 @@ class AzureStorageAdapter(CloudStoragePort):
         Initializes the AzureStorageAdapter with the given settings.
         """
         self.connection_string = connection_string
-        self.blob_service_client = BlobServiceClient.from_connection_string(self.connection_string)
+        self.blob_service_client = BlobServiceClient.from_connection_string(
+            self.connection_string
+        )
         self.parquet_engine = parquet_engine
         logging.basicConfig(level=logging.INFO)
 
@@ -46,7 +48,13 @@ class AzureStorageAdapter(CloudStoragePort):
         data = await stream.readall()
         return pd.read_parquet(BytesIO(data), engine=self.parquet_engine)
 
-    async def write_data(self, container: str, data_object: str, data: pd.DataFrame, overwrite: bool = False) -> None:
+    async def write_data(
+        self,
+        container: str,
+        data_object: str,
+        data: pd.DataFrame,
+        overwrite: bool = False,
+    ) -> None:
         """
         Asynchronously writes a Pandas DataFrame to a specified container and data object (blob) in Azure Blob Storage.
 
@@ -80,7 +88,9 @@ class AzureStorageAdapter(CloudStoragePort):
             data.to_parquet(buffer, engine=self.parquet_engine)
             buffer.seek(0)
             await blob_client.upload_blob(buffer, overwrite=overwrite)
-            logging.info(f"Written dataframe to Blob '{data_object}' in container '{container}'")
+            logging.info(
+                f"Written dataframe to Blob '{data_object}' in container '{container}'"
+            )
         except Exception as e:
             logging.error(f"Failed to write data to Blob: {e}")
             raise e
@@ -118,6 +128,3 @@ class AzureStorageAdapter(CloudStoragePort):
         async for container in self.blob_service_client.list_containers():
             container_names.append(container.name)
         return container_names
-
-
-

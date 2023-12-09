@@ -25,7 +25,13 @@ class CloudStoragePort(ABC):
         pass
 
     @abstractmethod
-    async def write_data(self, container: str, data_object: str, data: pd.DataFrame, overwrite: bool = False) -> None:
+    async def write_data(
+        self,
+        container: str,
+        data_object: str,
+        data: pd.DataFrame,
+        overwrite: bool = False,
+    ) -> None:
         """
         Asynchronously write a Pandas DataFrame to a specified container and data object (file) in the cloud storage.
 
@@ -38,7 +44,9 @@ class CloudStoragePort(ABC):
         pass
 
     @abstractmethod
-    def list_objects(self, container: str, regex_pattern: Optional[str] = None) -> List[str]:
+    def list_objects(
+        self, container: str, regex_pattern: Optional[str] = None
+    ) -> List[str]:
         """
         Lists all objects (blobs) in a specified container, optionally filtered by a regex pattern.
 

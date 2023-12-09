@@ -1,5 +1,4 @@
 # tests/core/test_model.py
-from unittest.mock import AsyncMock, patch
 
 import pandas as pd
 import pytest
@@ -14,7 +13,13 @@ class FakeStoragePort(CloudStoragePort):
         # Return a dummy DataFrame for testing
         return pd.DataFrame({"data": [1, 2, 3]})
 
-    async def write_data(self, container: str, data_object: str, data: pd.DataFrame, overwrite: bool = False) -> None:
+    async def write_data(
+        self,
+        container: str,
+        data_object: str,
+        data: pd.DataFrame,
+        overwrite: bool = False,
+    ) -> None:
         pass
 
     def list_objects(self, container: str) -> list:

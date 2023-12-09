@@ -17,7 +17,8 @@ def mock_blob_service_client():
 @pytest.fixture
 def azure_adapter(mock_blob_service_client):
     with patch(
-        "azure.storage.blob.aio.BlobServiceClient.from_connection_string", return_value=mock_blob_service_client
+        "azure.storage.blob.aio.BlobServiceClient.from_connection_string",
+        return_value=mock_blob_service_client,
     ):
         return AzureStorageAdapter("dummy_connection_string")
 
