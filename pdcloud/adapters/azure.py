@@ -118,3 +118,6 @@ class AzureStorageAdapter(CloudStoragePort):
         async for container in self.blob_service_client.list_containers():
             container_names.append(container.name)
         return container_names
+
+
+
