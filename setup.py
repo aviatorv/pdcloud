@@ -19,6 +19,7 @@ setup(
         "pyarrow",
         "pandas",
         "aiohttp",
+        "pre-commit >=2.17.0,<4.0.0",
     ],
     extras_require={"test": ["pytest", "pytest-asyncio", "twine"]},
     python_requires=">=3.8",
