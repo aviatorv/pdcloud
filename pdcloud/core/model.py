@@ -111,5 +111,57 @@ class Lib:
         container = container or self.container
         return self.storage.list_objects(container, regex_pattern)
 
-    def get_containers(self) -> pd.DataFrame:
+    def get_containers(self) -> List[str]:
+        """
+        Retrieves a list of all container names in the connected cloud storage service.
+
+        Returns:
+            List[str]: A list containing the names of all containers in the cloud storage service.
+        """
         return asyncio.run(self.storage.list_all_containers())
+
+    def delete(self, data_object: str) -> None:
+        """
+        Deletes a specific data object from the container.
+
+        Args:
+            data_object (str): The specific data object to delete.
+        """
+        asyncio.run(self.storage.delete_blob(self.container, data_object))
+
+    def delete_container(self, container: str = None) -> None:
+        """
+        Deletes a specific data object from the container.
+
+        Args:
+            data_object (str): The specific data object to delete.
+        """
+        container = container or self.container
+        asyncio.run(self.storage.delete_container(container))
+
+    def blob_exists(self, data_object: str, container: str = None) -> bool:
+        """
+        Checks if a specified blob exists in a given container.
+
+        Args:
+            data_object (str): The name of the blob to check.
+            container (str): The name of the container.
+
+        Returns:
+            bool: True if the blob exists, False otherwise.
+        """
+        container = container or self.container
+        return asyncio.run(self.storage.blob_exists(container, data_object))
+
+    def container_exists(self, container: str = None) -> bool:
+        """
+        Checks if a specified container exists.
+
+        Args:
+            container (str): The name of the container.
+
+        Returns:
+            bool: True if the container exists, False otherwise.
+        """
+        container = container or self.container
+        return asyncio.run(self.storage.container_exists(container))

@@ -72,12 +72,12 @@ pip install pdcloud
 ```Python
 import pandas as pd
 
-from pdcloud import AzureStorageAdapter
+from pdcloud import AzureStorage
 from pdcloud import Lib
 
 # Initialize the Azure Storage Adapter
 connection_string = ""
-azure_storage = AzureStorageAdapter(connection_string)
+azure_storage = AzureStorage(connection_string)
 
 # Define the container name
 container_name = "library"

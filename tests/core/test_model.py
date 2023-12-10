@@ -1,7 +1,11 @@
 # tests/core/test_model.py
+import asyncio
+from typing import AsyncGenerator, List
+from unittest.mock import MagicMock
 
 import pandas as pd
 import pytest
+from aiohttp import StreamReader
 from pandas.testing import assert_frame_equal
 
 from pdcloud.core.model import Lib
@@ -22,8 +26,39 @@ class FakeStoragePort(CloudStoragePort):
     ) -> None:
         pass
 
-    def list_objects(self, container: str) -> list:
+    def list_objects(self, container: str, regex_pattern: str = None) -> list:
         return ["file1", "file2"]
+
+    async def get_blob_stream(self, container: str, data_object: str) -> StreamReader:
+        # Simulate an async operation
+        await asyncio.sleep(0)
+        return MagicMock(spec=StreamReader)
+
+    async def get_all_blob_streams(
+        self, container: str
+    ) -> AsyncGenerator[StreamReader, None]:
+        # Simulate an async operation
+        await asyncio.sleep(0)
+        for _ in self._data:
+            yield MagicMock(spec=StreamReader)
+
+    async def list_all_containers(self) -> List[str]:
+        # Simulate an async operation
+        await asyncio.sleep(0)
+        return ["container1", "container2"]
+
+    def blob_exists(self, container: str, data_object: str) -> bool:
+        return True
+
+    async def container_exists(self, container: str) -> bool:
+        await asyncio.sleep(0)
+        return True
+
+    async def delete_blob(self, container: str, data_object: str) -> None:
+        await asyncio.sleep(0)
+
+    async def delete_container(self, container: str) -> None:
+        await asyncio.sleep(0)
 
 
 @pytest.fixture
