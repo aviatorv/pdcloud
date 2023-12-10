@@ -1,0 +1,2 @@
+[tool.ruff]
+exclude = ["pdcloud/__init__.py", "pdcloud/tests/adapters/test_real_azure.py"]
